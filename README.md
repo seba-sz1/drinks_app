@@ -1,2 +1,2 @@
 # wonderland_drinks
-The Aplication show you every drink you can imagine
+The Application show you every drink you can imagine
