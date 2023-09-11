@@ -8,6 +8,11 @@
     <h2>
         Fill up the form
     </h2>
+
+    {% if error %}
+       <h3>{{ error }}</h3>
+    {%  endif %}
+
     <form action="{% url 'register' %}" method="post">
         {{ form }}
         {%  csrf_token %}
