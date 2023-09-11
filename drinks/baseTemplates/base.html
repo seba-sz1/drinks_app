@@ -12,7 +12,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-3">
-                <p>Logo</p>
+                <a href="/"><p>Logo</p></a>
             </div>
             <div class="col-md-9 text-end">
 
@@ -20,9 +20,11 @@
                 <a href="#">Log out</a>
 
                 Welcome {{user}}
+                {% elif not request.path == '/login/' %}
+
+                <a href="{% url 'login_user'%}">Log in</a>
                 {% else %}
                 <a href="{% url 'register'%}">Register</a>
-                <a href="{% url 'login_user'%}">Log in</a>
                 {% endif %}
             </div>
         </div>

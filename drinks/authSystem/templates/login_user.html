@@ -5,11 +5,11 @@ Login
 {% endblock title %}
 
 {% block content %}
-    <div class="alert alert-danger" role="alert">
-           {% if error %}
-             <h3>{{ error }}</h3>
-           {%  endif %}
-    </div>
+     {% if error %}
+        <div class="alert alert-danger" role="alert">
+            <h3>{{ error }}</h3>
+        </div>
+    {%  endif %}
 
 
 
