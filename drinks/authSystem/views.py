@@ -37,19 +37,17 @@ def login_user(request):
     if request.method == 'GET':
         return render(request, 'login_user.html', {'form': AuthenticationForm()})
     elif request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            return render(request, 'temp_home.html')
-        else:
-            usernameExist = User.objects.filter(username=username).exists()
-            if usernameExist:
-                error = 'Incorrect password.'
+        form = AuthenticationForm(data=request.POST)
+        if form.is_valid():
+            user = authenticate(request, username=form.cleaned_data['username'], password=form.cleaned_data['password'])
+            if user is not None:
+                login(request, user)
+                return render(request, 'temp_home.html')
             else:
-                error = 'No such user in database.'
-            return render(request, 'login_user.html', {'error': error, 'form': AuthenticationForm()})
+                error = 'Authentication failed.'
+        else:
+            error = form.errors
+        return render(request, 'login_user.html', {'error': error, 'form': AuthenticationForm()})
     else:
         return HttpResponseNotAllowed(permitted_methods=['GET', 'POST'])
 
