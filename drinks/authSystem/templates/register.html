@@ -6,9 +6,14 @@
 </head>
 <body>
     <h2>
-        Register
+        Fill up the form
     </h2>
-    {%  csrf_token %}
+    <form action="{% url 'register' %}" method="post">
+        {{ form }}
+        {%  csrf_token %}
+        <button type="submit">Register</button>
+    </form>
+
 </body>
 
 </html>
