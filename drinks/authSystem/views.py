@@ -1,14 +1,17 @@
-from django.db import IntegrityError
-from django.shortcuts import render
-from .forms import RegisterForm
-from django.contrib.auth.models import User
-from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponseNotAllowed
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.models import User
+from django.db import IntegrityError
+from django.http import HttpResponseNotAllowed
+from django.shortcuts import render
 
-def temp_home(request):
-    return render(request, 'temp_home.html')
+from .forms import RegisterForm
+
+
+def home(request):
+    return render(request, 'home.html')
+
 
 def register(request):
     if request.method == 'GET':
@@ -21,8 +24,9 @@ def register(request):
             error = 'This email is already taken. Try again.'
         else:
             try:
-                user = User.objects.create_user(form.cleaned_data['username'], form.cleaned_data['email'], form.cleaned_data['password1'])
-                return render(request, 'temp_home.html')
+                user = User.objects.create_user(form.cleaned_data['username'], form.cleaned_data['email'],
+                                                form.cleaned_data['password1'])
+                return render(request, 'home.html')
             except IntegrityError as e:
                 error = e
         return render(request, 'register.html', {'error': error, 'form': RegisterForm()})
@@ -39,7 +43,7 @@ def login_user(request):
             user = authenticate(request, username=form.cleaned_data['username'], password=form.cleaned_data['password'])
             if user is not None:
                 login(request, user)
-                return render(request, 'temp_home.html')
+                return render(request, 'home.html')
             else:
                 error = 'Authentication failed.'
         else:
@@ -48,7 +52,8 @@ def login_user(request):
     else:
         return HttpResponseNotAllowed(permitted_methods=['GET', 'POST'])
 
+
 @login_required
 def logout_user(request):
     logout(request)
-    return render(request, "temp_home.html")
+    return render(request, "home.html")
