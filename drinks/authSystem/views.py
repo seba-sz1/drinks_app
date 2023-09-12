@@ -1,51 +1,54 @@
+from django.db import IntegrityError
 from django.shortcuts import render
 from .forms import RegisterForm
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
+from django.http import HttpResponseNotAllowed
+from django.contrib.auth.decorators import login_required
 
 def temp_home(request):
     return render(request, 'temp_home.html')
 
-#TO DO: dodać sprawdzanie maila (czy to mail), ew. walidację hasła
 def register(request):
     if request.method == 'GET':
-        return render(request,'register.html', {'form': RegisterForm()})
-    else:
-        username = request.POST.get('username')
-        email = request.POST.get('email')
-        password1 = request.POST.get('password1')
-        password2 = request.POST.get('password2')
-        if password1 == password2:
-            usernameTaken = User.objects.filter(username=username).exists()
-            emailTaken = User.objects.filter(email=email).exists()
-            if emailTaken:
-                error = 'This email is already taken. Try again.'
-            if usernameTaken:
-                error = 'This username is already taken. Try again.'
-            if not emailTaken and not usernameTaken:
-                user = User.objects.create_user(username, email, password1)
-                return render(request, 'temp_home.html')
+        return render(request, 'register.html', {'form': RegisterForm()})
+    elif request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if not form.is_valid():
+            error = form.errors
+        elif User.objects.filter(email=form.cleaned_data['email']).exists():
+            error = 'This email is already taken. Try again.'
         else:
-            error = 'Wrong password. Try again'
-
+            try:
+                user = User.objects.create_user(form.cleaned_data['username'], form.cleaned_data['email'], form.cleaned_data['password1'])
+                return render(request, 'temp_home.html')
+            except IntegrityError as e:
+                error = e
         return render(request, 'register.html', {'error': error, 'form': RegisterForm()})
+    else:
+        return HttpResponseNotAllowed(permitted_methods=['GET', 'POST'])
+
 
 def login_user(request):
     if request.method == 'GET':
         return render(request, 'login_user.html', {'form': AuthenticationForm()})
-    else:
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            return render(request, 'temp_home.html')
-        else:
-            usernameExist = User.objects.filter(username=username).exists()
-            if usernameExist:
-                error = 'Incorrect password.'
+    elif request.method == 'POST':
+        form = AuthenticationForm(data=request.POST)
+        if form.is_valid():
+            user = authenticate(request, username=form.cleaned_data['username'], password=form.cleaned_data['password'])
+            if user is not None:
+                login(request, user)
+                return render(request, 'temp_home.html')
             else:
-                error = 'No such user in database.'
-            return render(request, 'login_user.html', {'error': error, 'form': AuthenticationForm()})
+                error = 'Authentication failed.'
+        else:
+            error = form.errors
+        return render(request, 'login_user.html', {'error': error, 'form': AuthenticationForm()})
+    else:
+        return HttpResponseNotAllowed(permitted_methods=['GET', 'POST'])
 
+@login_required
+def logout_user(request):
+    logout(request)
+    return render(request, "temp_home.html")
