@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+</head>
+<body>
+    <h2>
+        Fill up the form
+    </h2>
+
+    {% if error %}
+       <h3>{{ error }}</h3>
+    {%  endif %}
+
+    <form action="{% url 'register' %}" method="post">
+        {{ form }}
+        {%  csrf_token %}
+        <button type="submit">Register</button>
+    </form>
+
+</body>
+
+</html>
