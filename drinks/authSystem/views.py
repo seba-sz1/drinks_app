@@ -2,10 +2,11 @@ from django.db import IntegrityError
 from django.shortcuts import render
 from .forms import RegisterForm
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseNotAllowed
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import AuthenticationForm
+from .forms import LoginForm
 
 def temp_home(request):
     return render(request, 'temp_home.html')
@@ -32,7 +33,7 @@ def register(request):
 
 def login_user(request):
     if request.method == 'GET':
-        return render(request, 'login_user.html', {'form': AuthenticationForm()})
+        return render(request, 'login_user.html', {'form': LoginForm()})
     elif request.method == 'POST':
         form = AuthenticationForm(data=request.POST)
         if form.is_valid():
