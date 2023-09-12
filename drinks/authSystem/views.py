@@ -11,22 +11,18 @@ def temp_home(request):
 
 def register(request):
     if request.method == 'GET':
-        return render(request,'register.html', {'form': RegisterForm()})
+        return render(request, 'register.html', {'form': RegisterForm()})
     elif request.method == 'POST':
         form = RegisterForm(request.POST)
         if not form.is_valid():
             error = form.errors
-        #TODO: Remove email validation when user model has unique email and handle it in IntegrityError.
         elif User.objects.filter(email=form.cleaned_data['email']).exists():
             error = 'This email is already taken. Try again.'
         else:
             try:
-                user = User.objects.create_user(form.username, form.email, form.password1)
+                user = User.objects.create_user(form.cleaned_data['username'], form.cleaned_data['email'], form.cleaned_data['password1'])
                 return render(request, 'temp_home.html')
             except IntegrityError as e:
-                # if 'UNIQUE constraint failed: auth_user.email' in e.args:
-                #     error = 'This user already exists.'
-                # else:
                 error = e
         return render(request, 'register.html', {'error': error, 'form': RegisterForm()})
     else:
