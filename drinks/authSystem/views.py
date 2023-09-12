@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseNotAllowed
+from django.contrib.auth.decorators import login_required
 
 def temp_home(request):
     return render(request, 'temp_home.html')
@@ -47,4 +48,7 @@ def login_user(request):
     else:
         return HttpResponseNotAllowed(permitted_methods=['GET', 'POST'])
 
-
+@login_required
+def logout_user(request):
+    logout(request)
+    return render(request, "temp_home.html")
