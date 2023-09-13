@@ -5,10 +5,8 @@ from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.http import HttpResponseNotAllowed
 from django.shortcuts import render
-
+from .forms import LoginForm
 from .forms import RegisterForm
-
-
 def home(request):
     return render(request, 'home.html')
 
@@ -36,7 +34,7 @@ def register(request):
 
 def login_user(request):
     if request.method == 'GET':
-        return render(request, 'login_user.html', {'form': AuthenticationForm()})
+        return render(request, 'login_user.html', {'form': LoginForm()})
     elif request.method == 'POST':
         form = AuthenticationForm(data=request.POST)
         if form.is_valid():
