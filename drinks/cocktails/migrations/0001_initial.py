@@ -31,7 +31,7 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(max_length=100)),
                 ('description', models.TextField(blank=True)),
                 ('creation_date', models.DateTimeField(auto_now_add=True)),
-                ('ingredients', models.ManyToManyField(to='tasks.ingredient')),
+                ('ingredients', models.ManyToManyField(to='cocktails.ingredient')),
                 ('owner', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
