@@ -6,7 +6,7 @@ from django.db import IntegrityError
 from django.http import HttpResponseNotAllowed
 from django.shortcuts import render
 from .forms import LoginForm
-
+from .forms import RegisterForm
 def home(request):
     return render(request, 'home.html')
 
