@@ -1,13 +1,14 @@
-from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.http import HttpResponseNotAllowed
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+
 from .forms import LoginForm
 from .forms import RegisterForm
-from django.shortcuts import redirect
 
 
 def register(request):
@@ -18,12 +19,12 @@ def register(request):
         if not form.is_valid():
             error = form.errors
         elif User.objects.filter(email=form.cleaned_data['email']).exists():
-            error = 'This email is already taken. Try again.'
+            error = 'Ten email jest już zajęty. Spróbuj ponownie.'
         else:
             try:
                 user = User.objects.create_user(form.cleaned_data['username'], form.cleaned_data['email'],
                                                 form.cleaned_data['password1'])
-                return render(request, 'home.html')
+                return redirect("home")
             except IntegrityError as e:
                 error = e
         return render(request, 'register.html', {'error': error, 'form': RegisterForm()})
@@ -42,7 +43,7 @@ def login_user(request):
                 login(request, user)
                 return redirect('dashboard')
             else:
-                error = 'Authentication failed.'
+                error = 'Błąd autentykacji..'
         else:
             error = form.errors
         return render(request, 'login_user.html', {'error': error, 'form': AuthenticationForm()})
@@ -54,3 +55,23 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     return redirect("home")
+
+
+@login_required()
+def change_password(request):
+    if request.method == "GET":
+        form = PasswordChangeForm(request.user)
+    elif request.method == "POST":
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, 'Hasło zostało pomyślnie zaktualizowane.')
+            return redirect("home")
+        else:
+            messages.error(request, 'Coś poszło nie tak. Popraw poniższe błędy.')
+    else:
+        error = 'Coś poszło nie tak.'
+    return render(request, "change_password.html", {'form': form})
+
+

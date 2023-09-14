@@ -1,11 +1,11 @@
-from django.contrib.auth.models import User
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm
+from django.contrib.auth.models import User
 
 
 class RegisterForm(UserCreationForm):
     username = forms.CharField(
-        label='Username',
+        label='Nazwa użytkownika',
         max_length=100,
         widget=forms.TextInput(attrs={'class': 'form-control'}),
     )
@@ -14,24 +14,41 @@ class RegisterForm(UserCreationForm):
         widget=forms.EmailInput(attrs={'class': 'form-control'}),
     )
     password1 = forms.CharField(
-        label='Password',
+        label='Hasło',
         widget=forms.PasswordInput(attrs={'class': 'form-control'}),
     )
     password2 = forms.CharField(
-        label='Confirm Password',
+        label='Potwierdź hasło',
         widget=forms.PasswordInput(attrs={'class': 'form-control'}),
     )
     class Meta:
         model = User
         fields = ('username', 'email', 'password1', 'password2')
 
+
 class LoginForm(AuthenticationForm):
     username = forms.CharField(
-        label='Username',
+        label='Nazwa użytkownika',
         max_length=100,
         widget=forms.TextInput(attrs={'class': 'form-control'}),
     )
     password = forms.CharField(
-        label='Password',
+        label='Hasło',
         widget=forms.PasswordInput(attrs={'class': 'form-control'}),
     )
+
+
+class ChangePasswordForm(PasswordChangeForm):
+    old_password = forms.CharField(
+        label="Stare hasło",
+        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
+    )
+    new_password1 = forms.CharField(
+        label="Nowe hasło",
+        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
+    )
+    new_password2 = forms.CharField(
+        label="Powtórz nowe hasło",
+        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
+    )
+
