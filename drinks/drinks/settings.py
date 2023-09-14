@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'cocktails',
     'bootstrap5',
     'authSystem',
+    'dashboard',
 
 ]
 
