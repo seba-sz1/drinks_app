@@ -38,7 +38,7 @@ class LoginForm(AuthenticationForm):
     )
 
 
-class ChangePasswordForm(PasswordChangeForm):
+class CustomPasswordChangeForm(PasswordChangeForm):
     old_password = forms.CharField(
         label="Stare hasło",
         widget=forms.PasswordInput(attrs={'class': 'form-control'}),
