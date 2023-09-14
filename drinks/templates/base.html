@@ -1,43 +1,211 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title%}Drinks {% endblock title%}</title>
     {% load bootstrap5 %}
     {% bootstrap_css %}
 
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link href="https://api.fontshare.com/v2/css?f[]=gambetta@1,2&f[]=general-sans@1,2&display=swap" rel="stylesheet">
+
 </head>
 <body>
-<div style="background-color: lightblue;">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-3">
-                <a href="/"><p>Logo</p></a>
+<div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand" href="/"><img src="{% static 'images/logo.png' %}" alt="coctail creations"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="nav nav-pills">
+                    {% if request.path != '/login/' %}
+                    <li class="nav-item">
+                      <a class="nav-link active" aria-current="page" href="{% url 'login_user'%}">Zaloguj</a>
+                    </li>
+                    {% endif %}
+                    {% if request.path != '/register/' %}
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'register'%}">Rejestracja</a>
+                    </li>
+                    {% endif %}
+                    {% if user.is_authenticated%}
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'logout_user'%}">Wyloguj</a>
+                    </li>
+                    {% endif %}
+                  </ul>
             </div>
-            <div class="col-md-9 text-end">
 
-                {% if user.is_authenticated%}
-                <a href="#">Log out</a>
+        </nav>
 
-                Welcome {{user}}
-                {% elif not request.path == '/login/' %}
-
-                <a href="{% url 'login_user'%}">Log in</a>
-                {% else %}
-                <a href="{% url 'register'%}">Register</a>
-                {% endif %}
-            </div>
-        </div>
     </div>
-</div>
+{% if request.path == '/'  %}
+
+
+<header>
+    <div class="container text-center">
+       <h1 class="slogan"> Koktajle, które ożywią Twoje zmysły</h1>
+       <p class="mt-2">Skorzystaj z naszej wyszukiwarki! Wpisz swój ulubiony alkohol.</p>
+
+       <form class="pb-4 pt-4">
+            <div class="input-group rounded m-auto" style="width: 75%;">
+                <input type="search" class="form-control rounded"  placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                <button class="btn btn-primary" type="submit">Search </button>
+            </div>
+       </form>
+    </div>
+</header>
+
+<section class="container mb-5">
+            <div class="marquee-wrapper" style="user-select: none;">
+                <div class="marquee-content scrollingX">
+                    <div class="card-testimonial">
+                        <article>
+                            <picture>
+                                <source media="(min-width: 768px)" srcset="{% static 'images/1.jpg' %}">
+                                <img src="{% static 'images/1.jpg' %}" alt="">
+                            </picture>
+                            <h4>Sample title only</h4>
+                            <article class="short-description">
+                                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ratione, nesciunt. Optio omnis
+                                    ducimus autem aperiam incidunt quae harum cumque animi suscipit dolor cupiditate culpa,
+                                    doloremque dolorem voluptas qui dignissimos repellat.</p>
+                            </article>
+                        </article>
+                    </div>
+                    <div class="card-testimonial">
+                        <article>
+                            <picture>
+                                <source media="(min-width: 768px)" srcset="{% static 'images/2.jpg' %}">
+                                <img src="{% static 'images/2.jpg' %}" alt="">
+                            </picture>
+                            <h4>Sample title only</h4>
+                            <article class="short-description">
+                                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ratione, nesciunt. Optio omnis
+                                    ducimus autem aperiam incidunt quae harum cumque animi suscipit dolor cupiditate culpa,
+                                    doloremque dolorem voluptas qui dignissimos repellat.</p>
+                            </article>
+                        </article>
+                    </div>
+                    <div class="card-testimonial">
+                        <article>
+                            <picture>
+                                <source media="(min-width: 768px)" srcset="{% static 'images/1.jpg' %}">
+                                <img src="{% static 'images/1.jpg' %}" alt="">
+                            </picture>
+                            <h4>Sample title only</h4>
+                            <article class="short-description">
+                                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ratione, nesciunt. Optio omnis
+                                    ducimus autem aperiam incidunt quae harum cumque animi suscipit dolor cupiditate culpa,
+                                    doloremque dolorem voluptas qui dignissimos repellat.</p>
+                            </article>
+                        </article>
+                    </div>
+                    <div class="card-testimonial">
+                        <article>
+                            <picture>
+                                <source media="(min-width: 768px)" srcset="{% static 'images/2.jpg' %}">
+                                <img src="{% static 'images/2.jpg' %}" alt="">
+                            </picture>
+                            <h4>Sample title only</h4>
+                            <article class="short-description">
+                                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ratione, nesciunt. Optio omnis
+                                    ducimus autem aperiam incidunt quae harum cumque animi suscipit dolor cupiditate culpa,
+                                    doloremque dolorem voluptas qui dignissimos repellat.</p>
+                            </article>
+                        </article>
+                    </div>
+                    <div class="card-testimonial">
+                        <article>
+                            <picture>
+                                <source media="(min-width: 768px)" srcset="{% static 'images/1.jpg' %}">
+                                <img src="{% static 'images/1.jpg' %}" alt="">
+                            </picture>
+                            <h4>Sample title only</h4>
+                            <article class="short-description">
+                                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ratione, nesciunt. Optio omnis
+                                    ducimus autem aperiam incidunt quae harum cumque animi suscipit dolor cupiditate culpa,
+                                    doloremque dolorem voluptas qui dignissimos repellat.</p>
+                            </article>
+                        </article>
+                    </div>
+
+                </div>
+            </div>
+
+</section>
+<section class="parallax"></section>
+
+<section class="section-content">
+    <div class="container text-center">
+        <div class="mt-5">
+            <h3>Zapisz się do naszego newslettera!</h3>
+            <form class="pb-4 pt-4">
+                <div class="input-group rounded m-auto" style="width: 45%;">
+                    <input type="email" class="form-control rounded"  placeholder="E-mail" aria-label="Search" aria-describedby="search-addon" />
+                    <button class="btn btn-primary" type="submit">Zapisuje się </button>
+                </div>
+        </form>
+       </div>
+    </div>
+
+</section>
+
+<section class="parallax"></section>
+
+<section>
+    <div class="container text-center">
+        <h2>Nasz zespół doświadczonych barmanów!</h2>
+        <div class="row row-cols-1 row-cols-md-2 g-4 mt-2">
+            <div class="col">
+            <div class="card">
+                <img src="{% static 'images/piotr.jpg' %}" class="card-img-top" alt="...">
+                <div class="card-body">
+                <h5 class="card-title">Piotr</h5>
+                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                </div>
+            </div>
+            </div>
+            <div class="col">
+            <div class="card">
+                <img src="{% static 'images/kamila.png' %}" class="card-img-top" alt="...">
+                <div class="card-body">
+                <h5 class="card-title">Kamila</h5>
+                <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                </div>
+            </div>
+            </div>
+
+        </div>
+      </div>
+</section>
+{% else %}
+    {% block content %}
+
+    {% endblock content %}
+
+
+{% endif %}
+<footer>
+    <div class="container mt-2 mb-2 text-center"><p>&copy; 2023 Cocktail Creations. Wszystkie prawa zastrzeżone.</p></div>
+</footer>
+
 <div class="container">
     {% bootstrap_messages %}
 
- {% block content %}
 
- {% endblock content %}
 
 {% bootstrap_javascript %}
+
+    <script src="{% static 'js/main.js' %}"></script>
 </div>
 </body>
 </html>
