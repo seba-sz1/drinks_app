@@ -7,6 +7,7 @@ from django.http import HttpResponseNotAllowed
 from django.shortcuts import render
 from .forms import LoginForm
 from .forms import RegisterForm
+from django.shortcuts import redirect
 
 
 def register(request):
@@ -39,7 +40,7 @@ def login_user(request):
             user = authenticate(request, username=form.cleaned_data['username'], password=form.cleaned_data['password'])
             if user is not None:
                 login(request, user)
-                return render(request, 'home.html')
+                return redirect('dashboard')
             else:
                 error = 'Authentication failed.'
         else:
@@ -52,4 +53,4 @@ def login_user(request):
 @login_required
 def logout_user(request):
     logout(request)
-    return render(request, "home.html")
+    return redirect("home")
