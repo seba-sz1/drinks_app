@@ -11,10 +11,11 @@ Home
 
 {% if user.is_authenticated %}
     <h2>Welcome {{user}}</h2>
-    <a href="{% url 'logout_user' %}">Log out</a>
+    <a href="{% url 'logout_user' %}">Wyloguj się</a>
+    <a href="{% url 'change_password' %}">Zmień hasło</a>
 {% else %}
-    <a href="{% url 'register' %}"> Register</a>
-    <a href="{% url 'login_user' %}"> Log in</a>
+    <a href="{% url 'register' %}"> Zarejestruj się</a>
+    <a href="{% url 'login_user' %}"> Zaloguj się</a>
 {% endif %}
 
 {% endblock content %}
