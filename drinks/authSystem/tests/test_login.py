@@ -15,12 +15,16 @@ class TestLogin(TestCase):
         self.assertTemplateUsed(response, 'login_user.html')
 
     def test_post(self):
-        response = self.client.post("/login/", {'username': 'testuser', 'password': '123'}, follow=True)
-        self.assertEqual(response.status_code, 200)
-        self.assertRedirects(response, '/dashboard/', target_status_code=200)
+        response = self.client.post("/login/", {'username': 'testuser', 'password': '123'})
+        self.assertRedirects(response, '/dashboard/', status_code=302, target_status_code=200)
 
-    def test_post_failed(self):
-        response = self.client.post("/login/", {'username': 'testuser', 'password': 'abc'}, follow=True)
+    def test_post_failed_password(self):
+        response = self.client.post("/login/", {'username': 'testuser', 'password': 'abc'})
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'login_user.html')
+
+    def test_post_failed_username(self):
+        response = self.client.post("/login/", {'username': 'testuser2', 'password': '123'})
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'login_user.html')
 
