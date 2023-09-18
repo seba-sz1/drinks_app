@@ -26,23 +26,25 @@
 
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="nav nav-pills">
-                    {% if request.path != '/login/' %}
-                    <li class="nav-item">
-                      <a class="nav-link active" aria-current="page" href="{% url 'login_user'%}">Zaloguj</a>
-                    </li>
-                    {% endif %}
-                    {% if request.path != '/register/' %}
-                    <li class="nav-item">
-                      <a class="nav-link" href="{% url 'register'%}">Rejestracja</a>
-                    </li>
+                    {% if not user.is_authenticated%}
+                        {% if request.path != '/login/' %}
+                        <li class="nav-item">
+                          <a class="nav-link active" aria-current="page" href="{% url 'login_user'%}">Zaloguj</a>
+                        </li>
+                        {% endif %}
+                        {% if request.path != '/register/' %}
+                        <li class="nav-item">
+                          <a class="nav-link" href="{% url 'register'%}">Rejestracja</a>
+                        </li>
+                        {% endif %}
                     {% endif %}
                     {% if user.is_authenticated%}
-                    <li class="nav-item">
-                      <a class="nav-link" href="{% url 'logout_user'%}">Wyloguj</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="{% url 'change_password'%}">Zmień hasło</a>
-                    </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="{% url 'logout_user'%}">Wyloguj</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="{% url 'change_password'%}">Zmień hasło</a>
+                        </li>
                     {% endif %}
                   </ul>
             </div>
