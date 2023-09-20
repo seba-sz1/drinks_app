@@ -9,7 +9,6 @@ from django.shortcuts import render, redirect
 from .forms import CustomPasswordChangeForm, LoginForm, RegisterForm
 
 
-
 def register(request):
     if request.method == 'GET':
         return render(request, 'register.html', {'form': RegisterForm()})
@@ -23,7 +22,8 @@ def register(request):
             try:
                 user = User.objects.create_user(form.cleaned_data['username'], form.cleaned_data['email'],
                                                 form.cleaned_data['password1'])
-                return redirect("home")
+                messages.success(request, 'Użytkownik pomyślnie zarejestrowany.')
+                return redirect("dashboard")
             except IntegrityError as e:
                 error = e
         return render(request, 'register.html', {'error': error, 'form': form})
