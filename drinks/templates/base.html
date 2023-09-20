@@ -40,6 +40,9 @@
                     {% endif %}
                     {% if user.is_authenticated%}
                         <li class="nav-item">
+                          <a class="nav-link" href="{% url 'dashboard'%}">Panel klienta</a>
+                        </li>
+                        <li class="nav-item">
                           <a class="nav-link" href="{% url 'logout_user'%}">Wyloguj</a>
                         </li>
                         <li class="nav-item">
