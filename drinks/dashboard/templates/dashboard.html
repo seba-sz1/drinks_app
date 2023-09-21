@@ -6,6 +6,15 @@ Dashboard
 
 {% block content %}
 
-<h2>Dashboard test</h2>
+<div style="container">
+   <ul>
+  {% for drinks in drinksUser %}
+    <li>{{ drinks }}</li>
+  {% empty %}
+    <li>Brak elementów do wyświetlenia.</li>
+  {% endfor %}
+</ul>
+
+</div>
 
 {% endblock content %}

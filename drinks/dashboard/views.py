@@ -5,5 +5,5 @@ from cocktails.models import Drink
 
 @login_required()
 def dashboard(request):
-    # productUser = Drink.objects.filter(user=request.user)
-    return render(request, 'dashboard.html')
+    drinksUser = Drink.objects.filter(owner=request.user)
+    return render(request, 'dashboard.html', {'drinksUser': drinksUser})
