@@ -5,28 +5,27 @@ Dashboard
 {% endblock title %}
 
 {% block content %}
+<div class="container">
    <a href="{% url 'create'  %}">Add</a>
-<div style="container">
-   <ul>
-  {% for drinks in drinksUser %}
-    <div class="card mb-3" style="width: 18rem;">
-        <img src="" class="card-img-top" alt="">
-        <div class="card-body">
-            <h4 class="card-title">{{ drinks.name }}</h4>
-            <p class="card-text">{{drinks.description}}</p>
-            <ul>
-                {% for ingredient in ingredients %}
-                    <li>{{ ingredient.name }} | {{ ingredient.amount }} {{ ingredient.unit }}</li>
-                {% endfor %}
-            </ul>
+<div>
+    <div class="row">
+        {% for drink in drinksUser %}
+        <div class="col-md-3">
+            <div class="card mb-3" style="width: 18rem;">
+                <img src="" class="card-img-top" alt="">
+                <div class="card-body">
+                    <h4 class="card-title">{{ drink.name }}</h4>
+                    <p class="card-text">{{ drink.description }}</p>
+                    <ul>
+                        {% for ingredient in drink.ingredients.all %}
+                            <li>{{ ingredient.name }} | {{ ingredient.amount }} {{ ingredient.unit }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
         </div>
+        {% endfor %}
     </div>
-
-  {% empty %}
-    <li>Brak elementów do wyświetlenia.</li>
-  {% endfor %}
-</ul>
-
 </div>
 
 {% endblock content %}
