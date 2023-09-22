@@ -20,6 +20,7 @@ class Drink(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     description = models.TextField(blank=True)
     creation_date = models.DateTimeField(auto_now_add=True)
+    image = models.ImageField(upload_to='static/images/', default='static/images/1.jpg')
 
     def __str__(self):
         return f'{self.name} | {self.creation_date} | {self.description}'
