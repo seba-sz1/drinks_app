@@ -5,17 +5,28 @@ Home
 {% endblock title %}
 
 {% block content %}
-<h1>
-    Home
-</h1>
-
-{% if user.is_authenticated %}
-    <h2>Welcome {{user}}</h2>
-    <a href="{% url 'logout_user' %}">Wyloguj się</a>
-    <a href="{% url 'change_password' %}">Zmień hasło</a>
-{% else %}
-    <a href="{% url 'register' %}"> Zarejestruj się</a>
-    <a href="{% url 'login_user' %}"> Zaloguj się</a>
+<h3>Ostatnio dodane koktajle</h3>
+{% if last_cocktails1 %}
+    <div class="container text-center">
+      <div class="row align-items-start">
+        {% for cocktail in last_cocktails1 %}
+            <div class="col">
+                {{ cocktail.name}}
+            </div>
+        {% endfor %}
+      </div>
+    </div>
+{% endif %}
+{% if last_cocktails2 %}
+    <div class="container text-center">
+      <div class="row align-items-center">
+        {% for cocktail in last_cocktails2 %}
+        <div class="col">
+            {{ cocktail.name}}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
 {% endif %}
 
 {% endblock content %}
