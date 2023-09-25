@@ -23,15 +23,16 @@ class Ingredient(models.Model):
     def __str__(self):
         return f'{self.name}  |  {self.amount} {self.unit}'
 
+
 class Drink(models.Model):
     name = models.CharField(max_length=100, blank=False)
     ingredients = models.ManyToManyField(Ingredient)
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     description = models.TextField(blank=True)
     creation_date = models.DateTimeField(auto_now_add=True)
-    image = models.ImageField(upload_to='images/', blank=True)
+    image = models.ImageField(upload_to='images/', default='images/1.jpg')
     thumbnail = models.ImageField(upload_to='thumbnails/', blank=True, null=True)
-    drink_publish = models.BooleanField(default=True)
+    public = models.BooleanField(default=True)
 
     def save(self, *args, **kwargs):
         # Tworzenie miniaturki (thumbnail) na podstawie obrazu przy każdym zapisie
@@ -66,7 +67,5 @@ class Drink(models.Model):
 
         return self.thumbnail
 
-
     def __str__(self):
         return f'{self.name} | {self.creation_date} | {self.description}'
-
