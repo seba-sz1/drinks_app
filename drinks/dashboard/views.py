@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from cocktails.models import Drink, Ingredient
+from django.http import HttpResponseNotAllowed
 from .forms import AddDrink
 
 
@@ -15,7 +16,7 @@ def dashboard(request):
 def create(request):
     if request.method == 'GET':
         return render(request, 'create.html', {'form' : AddDrink()})
-    else:
+    elif request.method == 'POST':
         form = AddDrink(request.POST)
         if form.is_valid():
             drink = form.save(commit=False)
@@ -25,3 +26,5 @@ def create(request):
         else:
             error = 'Coś poszło nie tak!'
             return render(request, 'create.html', {'form': AddDrink(), 'error': error})
+    else:
+        return HttpResponseNotAllowed(permitted_methods=['GET', 'POST'])
