@@ -29,9 +29,9 @@ class Drink(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     description = models.TextField(blank=True)
     creation_date = models.DateTimeField(auto_now_add=True)
-    image = models.ImageField(upload_to='images/', default='images/1.jpg')
+    image = models.ImageField(upload_to='images/', blank=True)
     thumbnail = models.ImageField(upload_to='thumbnails/', blank=True, null=True)
-    public = models.BooleanField(default=True)
+    drink_publish = models.BooleanField(default=True)
 
     def save(self, *args, **kwargs):
         # Tworzenie miniaturki (thumbnail) na podstawie obrazu przy każdym zapisie
