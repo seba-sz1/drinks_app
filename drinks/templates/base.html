@@ -151,9 +151,10 @@
 </section>
 <section class="parallax"></section>
 <section class="container mb-5">
-{% block content %}
+    {% block contenthome %}
 
-{% endblock content %}
+
+    {% endblock contenthome %}
 </section>
 
 <section class="parallax"></section>
@@ -201,8 +202,15 @@
         </div>
       </div>
 </section>
+{% else %}
+
+    {% block content %}
+
+
+    {% endblock content %}
 
 {% endif %}
+
 <footer>
     <div class="container mt-2 mb-2 text-center"><p>&copy; 2023 Cocktail Creations. Wszystkie prawa zastrzeżone.</p></div>
 </footer>
