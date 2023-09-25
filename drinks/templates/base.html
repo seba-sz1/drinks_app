@@ -55,22 +55,23 @@
         </nav>
 
     </div>
-{% if request.path == '/'  %}
+
 
 <header>
     <div class="container text-center">
        <h1 class="slogan"> Koktajle, które ożywią Twoje zmysły</h1>
        <p class="mt-2">Skorzystaj z naszej wyszukiwarki! Wpisz swój ulubiony alkohol.</p>
 
-       <form class="pb-4 pt-4">
+       <form class="pb-4 pt-4" action="{% url 'search' %}" method="GET">
             <div class="input-group rounded m-auto" style="width: 75%;">
-                <input type="search" class="form-control rounded"  placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                <input type="search" class="form-control rounded" name="q" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
                 <button class="btn btn-primary" type="submit">Search </button>
             </div>
        </form>
     </div>
 </header>
 
+{% if request.path == '/'  %}
 <section class="container mb-5">
             <div class="marquee-wrapper" style="user-select: none;">
                 <div class="marquee-content scrollingX">
