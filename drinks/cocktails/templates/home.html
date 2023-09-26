@@ -1,21 +1,59 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}
 Home
 {% endblock title %}
 
-{% block content %}
-<h1>
-    Home
-</h1>
-
-{% if user.is_authenticated %}
-    <h2>Welcome {{user}}</h2>
-    <a href="{% url 'logout_user' %}">Wyloguj się</a>
-    <a href="{% url 'change_password' %}">Zmień hasło</a>
-{% else %}
-    <a href="{% url 'register' %}"> Zarejestruj się</a>
-    <a href="{% url 'login_user' %}"> Zaloguj się</a>
+{% block contenthome %}
+<h3>Ostatnio dodane koktajle</h3>
+{% if last_cocktails1 %}
+    <div class="container text-center">
+      <div class="row align-items-start">
+        {% for cocktail in last_cocktails1 %}
+            <div class="col">
+                <div class="card-testimonial" >
+                    <a href="{% url 'detail_cocktail' cocktail.id %}">
+                        <article>
+                            <picture>
+                                <source media="(min-width: 768px)" srcset="{{ cocktail.image.url }}">
+                                <img src="{{ cocktail.image.url }}" alt="Drink Image">
+                            </picture>
+                            <h4>{{ cocktail.name }}</h4>
+                            <article class="short-description">
+                                <p>{{ cocktail.description }}</p>
+                            </article>
+                        </article>
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+      </div>
+    </div>
+{% endif %}
+{% if last_cocktails2 %}
+    <div class="container text-center">
+      <div class="row align-items-center">
+        {% for cocktail in last_cocktails2 %}
+        <div class="col">
+            <div class="card-testimonial">
+                <a href="{% url 'detail_cocktail' cocktail.id %}">
+                    <article>
+                        <picture>
+                            <source media="(min-width: 768px)" srcset="{{ cocktail.image.url }}">
+                            <img src="{{ cocktail.image.url }}" alt="Drink Image">
+                        </picture>
+                        <h4>{{ cocktail.name }}</h4>
+                        <article class="short-description">
+                            <p>{{ cocktail.description }}</p>
+                        </article>
+                    </article>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
 {% endif %}
 
-{% endblock content %}
+{% endblock contenthome %}
