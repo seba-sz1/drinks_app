@@ -15,7 +15,7 @@ def home(request):
 
 def search(request):
     query = request.GET.get('q')
-    drinks = Drink.objects.filter(name__icontains=query)
+    drinks = Drink.objects.filter(name__icontains=query) | Drink.objects.filter(ingredients__name__icontains=query)
     total_count = drinks.count()
     last_added_cocktails = Drink.objects.order_by('-creation_date')[:3]
 
