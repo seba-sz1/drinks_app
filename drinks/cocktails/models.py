@@ -9,19 +9,23 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 
+
 def random_string(length):
     """Generates a random string of given length."""
     letters = string.ascii_lowercase
     return ''.join(random.choice(letters) for _ in range(length))
 
+
 class Ingredient(models.Model):
     unit_type = (('ml', 'mililitry'), ('szt', 'sztuk'))
     name = models.CharField(max_length=220)
-    amount = models.PositiveIntegerField(default=1, validators=[MinValueValidator(1), MaxValueValidator(300)], blank=True)
+    amount = models.PositiveIntegerField(default=1, validators=[MinValueValidator(1), MaxValueValidator(300)],
+                                         blank=True)
     unit = models.CharField(default='ml', choices=unit_type, max_length=3)
 
     def __str__(self):
         return f'{self.name}  |  {self.amount} {self.unit}'
+
 
 class Drink(models.Model):
     name = models.CharField(max_length=100, blank=False)
@@ -61,8 +65,8 @@ class Drink(models.Model):
         # Zapisz miniaturkę z losową nazwą w katalogu "thumbnails/"
         thumbnail_path = thumbnail_filename
         self.thumbnail.save(thumbnail_path,
-                            InMemoryUploadedFile(thumbnail_io, None, thumbnail_path, 'image/jpeg', thumbnail_io.tell(),
-                                                 None), save=False)
+                            InMemoryUploadedFile(thumbnail_io, None, thumbnail_path, 'image/jpeg',
+                                                 thumbnail_io.tell(), None), save=False)
 
         return self.thumbnail
 
