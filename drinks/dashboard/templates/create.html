@@ -16,10 +16,21 @@ Add drink
                 <div class="card">
                     <div class="card-header">Dodaj swój przepis na drinka:</div>
                     <div class="card-body">
-                         <form action="{% url 'create' %}" method="post">
+                         <form action="{% url 'create' %}" method="post" enctype="multipart/form-data">
                             {% csrf_token %}
                             <div class="form-group">
-                                 {{ form }}
+                                  {{ form }}
+
+                                <div class="form-group" id="ingredients-container">
+                                    <select class="form-control"name="ingredient_1">
+                                        <option value="" selected disabled>Wybierz składnik</option>
+                                        {% for ingredient in ingredients %}
+                                            <option value="{{ ingredient.id }}">{{ ingredient.name }} {{ ingredient.amount }} {{ ingredient.unit }}</option>
+                                        {% endfor %}
+                                    </select>
+
+                                </div>
+                                <button type="button" class="btn btn-primary" onclick="cloneSelect()">Dodaj składnik</button>
                             </div>
 
                             <button type="submit" class="btn btn-primary mt-2">Dodaj</button>

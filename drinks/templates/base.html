@@ -223,6 +223,35 @@
 
     {% bootstrap_javascript %}
     <script src="{% static 'js/main.js' %}"></script>
+
+
+
 </div>
 </body>
 </html>
+
+
+<script>
+
+    var counter = 1;
+
+    function cloneSelect() {
+
+        // Klonuj pole wyboru
+        var originalSelect = document.querySelector("#ingredients-container select");
+        var clonedSelect = originalSelect.cloneNode(true);
+
+        // Zwiększ licznik
+        counter++;
+
+        // Zmień nazwę sklonowanego pola
+        clonedSelect.name = "ingredient_" + counter;
+
+
+        // Usuń wartość wybraną w sklonowanym polu
+        clonedSelect.selectedIndex = -1;
+
+        // Dodaj sklonowane pole do kontenera
+        document.querySelector("#ingredients-container").appendChild(clonedSelect);
+    }
+</script>
