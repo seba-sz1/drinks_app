@@ -23,7 +23,6 @@ class Ingredient(models.Model):
     def __str__(self):
         return f'{self.name}  |  {self.amount} {self.unit}'
 
-
 class Drink(models.Model):
     name = models.CharField(max_length=100, blank=False)
     ingredients = models.ManyToManyField(Ingredient)
