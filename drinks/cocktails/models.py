@@ -24,3 +24,4 @@ class Drink(models.Model):
 
     def __str__(self):
         return f'{self.name} | {self.creation_date} | {self.description}'
+

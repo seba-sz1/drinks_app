@@ -12,7 +12,8 @@ Home
       <div class="row align-items-start">
         {% for cocktail in last_cocktails1 %}
             <div class="col">
-                <div class="card-testimonial">
+                <div class="card-testimonial" >
+                    <a href="{% url 'detail_cocktail' cocktail.id %}">
                         <article>
                             <picture>
                                 <source media="(min-width: 768px)" srcset="{{ cocktail.image.url }}">
@@ -23,7 +24,8 @@ Home
                                 <p>{{ cocktail.description }}</p>
                             </article>
                         </article>
-                    </div>
+                    </a>
+                </div>
             </div>
         {% endfor %}
       </div>
@@ -35,16 +37,18 @@ Home
         {% for cocktail in last_cocktails2 %}
         <div class="col">
             <div class="card-testimonial">
-                <article>
-                    <picture>
-                        <source media="(min-width: 768px)" srcset="{{ cocktail.image.url }}">
-                        <img src="{{ cocktail.image.url }}" alt="Drink Image">
-                    </picture>
-                    <h4>{{ cocktail.name }}</h4>
-                    <article class="short-description">
-                        <p>{{ cocktail.description }}</p>
+                <a href="{% url 'detail_cocktail' cocktail.id %}">
+                    <article>
+                        <picture>
+                            <source media="(min-width: 768px)" srcset="{{ cocktail.image.url }}">
+                            <img src="{{ cocktail.image.url }}" alt="Drink Image">
+                        </picture>
+                        <h4>{{ cocktail.name }}</h4>
+                        <article class="short-description">
+                            <p>{{ cocktail.description }}</p>
+                        </article>
                     </article>
-                </article>
+                </a>
             </div>
         </div>
         {% endfor %}

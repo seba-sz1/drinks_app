@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import Drink
 from django.utils import timezone
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
@@ -32,3 +32,9 @@ def search(request):
     context = {'drinks': drinks, 'last_cocktails': last_added_cocktails, 'query': query, 'total_count': total_count}
 
     return render(request, 'search_results.html', context)
+
+
+def detail_cocktail(request, drinkID):
+    drink = get_object_or_404(Drink, id=drinkID)
+    last_added_cocktails = Drink.objects.order_by('-creation_date')[:3]
+    return render(request, 'cocktail_detail.html', {'drink': drink, 'last_cocktails': last_added_cocktails})
