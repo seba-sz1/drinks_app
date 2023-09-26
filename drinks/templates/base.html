@@ -1,5 +1,5 @@
 {% load static %}
-<!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -55,7 +55,6 @@
         </nav>
 
     </div>
-{% if request.path == '/'  %}
 
 
 <header>
@@ -63,15 +62,16 @@
        <h1 class="slogan"> Koktajle, które ożywią Twoje zmysły</h1>
        <p class="mt-2">Skorzystaj z naszej wyszukiwarki! Wpisz swój ulubiony alkohol.</p>
 
-       <form class="pb-4 pt-4">
+       <form class="pb-4 pt-4" action="{% url 'search' %}" method="GET">
             <div class="input-group rounded m-auto" style="width: 75%;">
-                <input type="search" class="form-control rounded"  placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                <input type="search" class="form-control rounded" name="q" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
                 <button class="btn btn-primary" type="submit">Search </button>
             </div>
        </form>
     </div>
 </header>
 
+{% if request.path == '/'  %}
 <section class="container mb-5">
             <div class="marquee-wrapper" style="user-select: none;">
                 <div class="marquee-content scrollingX">
@@ -151,6 +151,14 @@
 
 </section>
 <section class="parallax"></section>
+<section class="container mb-5">
+    {% block contenthome %}
+
+
+    {% endblock contenthome %}
+</section>
+
+<section class="parallax"></section>
 
 <section class="section-content">
     <div class="container text-center">
@@ -196,12 +204,14 @@
       </div>
 </section>
 {% else %}
+
     {% block content %}
+
 
     {% endblock content %}
 
-
 {% endif %}
+
 <footer>
     <div class="container mt-2 mb-2 text-center"><p>&copy; 2023 Cocktail Creations. Wszystkie prawa zastrzeżone.</p></div>
 </footer>
@@ -209,10 +219,7 @@
 <div class="container">
     {% bootstrap_messages %}
 
-
-
-{% bootstrap_javascript %}
-
+    {% bootstrap_javascript %}
     <script src="{% static 'js/main.js' %}"></script>
 </div>
 </body>
