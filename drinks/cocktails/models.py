@@ -34,8 +34,12 @@ class Drink(models.Model):
     drink_publish = models.BooleanField(default=True)
 
     def save(self, *args, **kwargs):
+        # Zmiana nazwy zdjęcia głównego na losową
+        self.image.name = random_string(10) + '.jpg'
+
         # Tworzenie miniaturki (thumbnail) na podstawie obrazu przy każdym zapisie
         self.thumbnail = self.create_thumbnail()
+
 
         super(Drink, self).save(*args, **kwargs)
 
@@ -59,9 +63,9 @@ class Drink(models.Model):
         thumbnail_filename = random_string(10) + '.jpg'
 
         # Zapisz miniaturkę z losową nazwą w katalogu "thumbnails/"
-        thumbnail_path = thumbnail_filename
-        self.thumbnail.save(thumbnail_path,
-                            InMemoryUploadedFile(thumbnail_io, None, thumbnail_path, 'image/jpeg', thumbnail_io.tell(),
+
+        self.thumbnail.save(thumbnail_filename,
+                            InMemoryUploadedFile(thumbnail_io, None, thumbnail_filename, 'image/jpeg', thumbnail_io.tell(),
                                                  None), save=False)
 
         return self.thumbnail
