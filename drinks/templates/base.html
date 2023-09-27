@@ -74,84 +74,32 @@
 </header>
 
 {% if request.path == '/'  %}
-<section class="container mb-5">
-            <div class="marquee-wrapper" style="user-select: none;">
-                <div class="marquee-content scrollingX">
-                    <div class="card-testimonial">
-                        <article>
-                            <picture>
-                                <source media="(min-width: 768px)" srcset="{% static 'images/1.jpg' %}">
-                                <img src="{% static 'images/1.jpg' %}" alt="">
-                            </picture>
-                            <h4>Sample title only</h4>
-                            <article class="short-description">
-                                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ratione, nesciunt. Optio omnis
-                                    ducimus autem aperiam incidunt quae harum cumque animi suscipit dolor cupiditate culpa,
-                                    doloremque dolorem voluptas qui dignissimos repellat.</p>
-                            </article>
-                        </article>
-                    </div>
-                    <div class="card-testimonial">
-                        <article>
-                            <picture>
-                                <source media="(min-width: 768px)" srcset="{% static 'images/2.jpg' %}">
-                                <img src="{% static 'images/2.jpg' %}" alt="">
-                            </picture>
-                            <h4>Sample title only</h4>
-                            <article class="short-description">
-                                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ratione, nesciunt. Optio omnis
-                                    ducimus autem aperiam incidunt quae harum cumque animi suscipit dolor cupiditate culpa,
-                                    doloremque dolorem voluptas qui dignissimos repellat.</p>
-                            </article>
-                        </article>
-                    </div>
-                    <div class="card-testimonial">
-                        <article>
-                            <picture>
-                                <source media="(min-width: 768px)" srcset="{% static 'images/1.jpg' %}">
-                                <img src="{% static 'images/1.jpg' %}" alt="">
-                            </picture>
-                            <h4>Sample title only</h4>
-                            <article class="short-description">
-                                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ratione, nesciunt. Optio omnis
-                                    ducimus autem aperiam incidunt quae harum cumque animi suscipit dolor cupiditate culpa,
-                                    doloremque dolorem voluptas qui dignissimos repellat.</p>
-                            </article>
-                        </article>
-                    </div>
-                    <div class="card-testimonial">
-                        <article>
-                            <picture>
-                                <source media="(min-width: 768px)" srcset="{% static 'images/2.jpg' %}">
-                                <img src="{% static 'images/2.jpg' %}" alt="">
-                            </picture>
-                            <h4>Sample title only</h4>
-                            <article class="short-description">
-                                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ratione, nesciunt. Optio omnis
-                                    ducimus autem aperiam incidunt quae harum cumque animi suscipit dolor cupiditate culpa,
-                                    doloremque dolorem voluptas qui dignissimos repellat.</p>
-                            </article>
-                        </article>
-                    </div>
-                    <div class="card-testimonial">
-                        <article>
-                            <picture>
-                                <source media="(min-width: 768px)" srcset="{% static 'images/1.jpg' %}">
-                                <img src="{% static 'images/1.jpg' %}" alt="">
-                            </picture>
-                            <h4>Sample title only</h4>
-                            <article class="short-description">
-                                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ratione, nesciunt. Optio omnis
-                                    ducimus autem aperiam incidunt quae harum cumque animi suscipit dolor cupiditate culpa,
-                                    doloremque dolorem voluptas qui dignissimos repellat.</p>
-                            </article>
-                        </article>
+    {% if pined_home %}
+        <section class="container mb-5">
+                    <div class="marquee-wrapper" style="user-select: none;">
+                        <div class="marquee-content scrollingX">
+                            {% for cocktail in pined_home %}
+                                <div class="card-testimonial">
+                                    <article>
+                                        <a href="{% url 'detail_cocktail' cocktail.id %}">
+                                            <picture>
+                                                <source media="(min-width: 768px)" srcset="{{ cocktail.image.url }}">
+                                                <img src="{{ cocktail.image.url }}" alt="{{ cocktail.name }}">
+                                            </picture>
+                                            <h4>{{ cocktail.name }}</h4>
+                                        </a>
+
+                                        <article class="short-description">
+                                            <p>{{ cocktail.description }}</p>
+                                        </article>
+                                    </article>
+                                </div>
+                            {% endfor %}
+                        </div>
                     </div>
 
-                </div>
-            </div>
-
-</section>
+        </section>
+        {% endif %}
 <section class="parallax"></section>
 <section class="container mb-5">
     {% block contenthome %}

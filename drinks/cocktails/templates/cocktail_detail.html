@@ -34,7 +34,7 @@ Cocktail details
                         <a href="{% url 'detail_cocktail' cocktail.id %}">
                             <picture>
                                     <source media="(min-width: 768px)" srcset="{{ cocktail.image.url }}">
-                                    <img src="{{ cocktail.image.url }}" alt="Drink Image">
+                                    <img src="{{ cocktail.image.url }}" alt="{{ cocktail.name }}">
                             </picture>
                             <h4>{{ cocktail.name }}</h4>
                         </a>
