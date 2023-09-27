@@ -11,13 +11,12 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 def random_string(length):
-    """Generates a random string of given length."""
     letters = string.ascii_lowercase
     return ''.join(random.choice(letters) for _ in range(length))
 
 
 class Ingredient(models.Model):
-    unit_type = (('ml', 'mililitry'), ('szt', 'sztuk'))
+    unit_type = (('ml', 'mililitr'), ('szt', 'sztuk'),('g', 'gram'))
     name = models.CharField(max_length=220)
     amount = models.PositiveIntegerField(default=1, validators=[MinValueValidator(1), MaxValueValidator(300)],
                                          blank=True)
@@ -36,6 +35,7 @@ class Drink(models.Model):
     image = models.ImageField(upload_to='images/', blank=True)
     thumbnail = models.ImageField(upload_to='thumbnails/', blank=True, null=True)
     drink_publish = models.BooleanField(default=True)
+    pin_to_main_page = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
         # Tworzenie miniaturki (thumbnail) na podstawie obrazu przy każdym zapisie
