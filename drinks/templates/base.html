@@ -59,7 +59,6 @@
 
     </div>
 
-
 <header>
     <div class="container text-center">
        <h1 class="slogan"> Koktajle, które ożywią Twoje zmysły</h1>
@@ -70,6 +69,7 @@
 </header>
 
 {% if request.path == '/'  %}
+    <section class="parallax"></section>
     {% if pined_home %}
         <section class="container mb-5">
                     <div class="marquee-wrapper" style="user-select: none;">
@@ -168,5 +168,34 @@
     {% bootstrap_javascript %}
     <script src="{% static 'js/main.js' %}"></script>
 </div>
+
+{% block top_button %}
+<button id="top-button" class="btn btn-primary d-none" onclick="topFunction()" title="Go to top"> ^ ^ </button>
+<style>
+  #top-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+  }
+</style>
+
+<script>
+  window.onscroll = function() {scrollFunction()};
+
+  function scrollFunction() {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+      document.getElementById("top-button").classList.remove("d-none");
+    } else {
+      document.getElementById("top-button").classList.add("d-none");
+    }
+  }
+
+  function topFunction() {
+    document.body.scrollTop = 0; // For Safari
+    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+  }
+</script>
+{% endblock %}
+
 </body>
 </html>
