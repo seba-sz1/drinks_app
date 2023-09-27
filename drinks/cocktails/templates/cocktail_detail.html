@@ -23,32 +23,29 @@ Cocktail details
         </div>
     </div>
 
-
-<h3>Sprawdź ostatnio dodane koktajle</h3>
 {% if last_cocktails %}
+<h3>Sprawdź ostatnio dodane koktajle</h3>
     <div class="container text-center">
       <div class="row align-items-start">
         {% for cocktail in last_cocktails %}
             <div class="col">
-                <a href="{% url 'detail_cocktail' cocktail.id %}">
-                    <div class="card-testimonial">
-                            <article>
-                                <picture>
+                <div class="card-testimonial">
+                    <article>
+                        <a href="{% url 'detail_cocktail' cocktail.id %}">
+                            <picture>
                                     <source media="(min-width: 768px)" srcset="{{ cocktail.image.url }}">
                                     <img src="{{ cocktail.image.url }}" alt="Drink Image">
-                                </picture>
-                                <h4>{{ cocktail.name }}</h4>
-                                <article class="short-description">
-                                    <p>{{ cocktail.description }}</p>
-                                </article>
-                            </article>
-                    </div>
-                </a>
+                            </picture>
+                            <h4>{{ cocktail.name }}</h4>
+                        </a>
+                        <article class="short-description">
+                            <p style="font-size: small">Dodano: {{ drink.creation_date }}</p>
+                        </article>
+                    </article>
+                </div>
             </div>
         {% endfor %}
       </div>
     </div>
 {% endif %}
-
-
 {% endblock content %}
