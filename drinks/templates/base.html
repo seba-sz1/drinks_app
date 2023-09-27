@@ -14,6 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link href="https://api.fontshare.com/v2/css?f[]=gambetta@1,2&f[]=general-sans@1,2&display=swap" rel="stylesheet">
+    <link rel="stylesheetlike" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 </head>
 <body>
@@ -62,14 +63,9 @@
 <header>
     <div class="container text-center">
        <h1 class="slogan"> Koktajle, które ożywią Twoje zmysły</h1>
-       <p class="mt-2">Skorzystaj z naszej wyszukiwarki! Wpisz swój ulubiony alkohol.</p>
+        {% block search %}
 
-       <form class="pb-4 pt-4" action="{% url 'search' %}" method="GET">
-            <div class="input-group rounded m-auto" style="width: 75%;">
-                <input type="search" class="form-control rounded" name="q" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-                <button class="btn btn-primary" type="submit">Search </button>
-            </div>
-       </form>
+        {% endblock search %}
     </div>
 </header>
 

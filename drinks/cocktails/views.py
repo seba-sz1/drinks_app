@@ -1,7 +1,8 @@
-from django.shortcuts import render, get_object_or_404
-from .models import Drink
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Drink, Like
 from django.utils import timezone
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.contrib.auth.decorators import login_required
 
 
 def home(request):
@@ -42,4 +43,44 @@ def detail_cocktail(request, drinkID):
     drink = get_object_or_404(Drink, id=drinkID)
     last_added_cocktails = Drink.objects.filter(drink_publish=True).order_by('-creation_date')
     last_added_cocktails = last_added_cocktails[:3] if len(last_added_cocktails[:3]) >= 2 else None
-    return render(request, 'cocktail_detail.html', {'drink': drink, 'last_cocktails': last_added_cocktails})
+
+    is_user_liked = False
+    if request.user.is_authenticated:
+        likes = drink.like_set.filter(user=request.user)
+        if likes.exists():
+            is_user_liked = True
+
+    context = {'drink': drink,
+               'last_cocktails': last_added_cocktails,
+               'is_user_liked': is_user_liked,
+               }
+
+    return render(request, 'cocktail_detail.html', context)
+
+
+@login_required
+def like_drink(request, drink_id):
+    drink = get_object_or_404(Drink, pk=drink_id)
+
+    like = Like.objects.filter(user=request.user, drink=drink).first()
+
+    if not like:
+        Like.objects.create(user=request.user, drink=drink)
+        drink.likes += 1
+        drink.save()
+
+    return redirect('detail_cocktail', drink_id)
+
+
+@login_required
+def unlike_drink(request, drink_id):
+    drink = get_object_or_404(Drink, pk=drink_id)
+
+    like = Like.objects.filter(user=request.user, drink=drink).first()
+
+    if like:
+        like.delete()
+        drink.likes -= 1
+        drink.save()
+
+    return redirect('detail_cocktail', drink_id)

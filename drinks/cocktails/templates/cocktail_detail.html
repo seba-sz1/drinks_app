@@ -5,6 +5,17 @@
 Cocktail details
 {% endblock title %}
 
+
+{% block search %}
+       <p class="mt-2">Skorzystaj z naszej wyszukiwarki! Wpisz swój ulubiony alkohol.</p>
+       <form class="pb-4 pt-4" action="{% url 'search' %}" method="GET">
+            <div class="input-group rounded m-auto" style="width: 75%;">
+                <input type="search" class="form-control rounded" name="q" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                <button class="btn btn-primary" type="submit">Search </button>
+            </div>
+       </form>
+{% endblock search %}
+
 {% block content %}
 <div class="container" style="display: flex">
         <div class="left" style="flex: 50%">
@@ -20,6 +31,24 @@ Cocktail details
                 {% endfor %}
             </ul>
             <p style="font-size: small">Dodano: {{ drink.creation_date }}</p>
+            <div>
+                <p>Likes: {{ drink.likes }}</p>
+                {% if request.user.is_authenticated %}
+                    {% if is_user_liked %}
+                        <form action="{% url 'unlike_drink' drink.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit">Unlike</button>
+                        </form>
+                    {% else %}
+                        <form action="{% url 'like_drink' drink.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit">Like</button>
+                        </form>
+                    {% endif %}
+                {% else %}
+                    <p>Please <a href="{% url 'login_user' %}">login</a> to like this drink.</p>
+                {% endif %}
+            </div>
         </div>
     </div>
 
