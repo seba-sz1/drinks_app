@@ -46,6 +46,7 @@ class Drink(models.Model):
         return self.like_set.filter(user=self.owner).exists()
 
     def save(self, *args, **kwargs):
+
         self.thumbnail = self.create_thumbnail()
         super(Drink, self).save(*args, **kwargs)
 

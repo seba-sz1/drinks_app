@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-
 {% load static %}
 
 {% block title %}
@@ -7,8 +6,22 @@ Dashboard
 {% endblock title %}
 
 {% block content %}
+
+{% if messages %}
+
+<div class="bg-danger text-white">
+    <div class = "container">
+            {% for message in messages %}
+        <h5>{{ message }}</h5>
+            {% endfor %}
+
+    </div>
+</div>
+{% endif %}
+
+
 <div class="container">
-   <a href="{% url 'create'  %}">Add</a>
+   <a href="{% url 'create'  %}" class="btn btn-primary mb-3">Dodaj drinka</a>
 <div>
     <div class="row">
         {% for drink in drinksUser %}
@@ -23,6 +36,9 @@ Dashboard
                             <li>{{ ingredient.name }} | {{ ingredient.amount }} {{ ingredient.unit }}</li>
                         {% endfor %}
                     </ul>
+                    <a href="{% url 'delete_drink' postId=drink.id %}" class="btn btn-danger float-end">Usuń</a>
+
+
                 </div>
             </div>
         </div>
