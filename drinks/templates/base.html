@@ -68,7 +68,7 @@
     </div>
 </header>
 
-{% if request.path == '/'  %}
+{% if is_homepage %}
     <section class="parallax"></section>
     {% if pined_home %}
         <section class="container mb-5">
