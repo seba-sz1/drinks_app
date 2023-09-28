@@ -11,15 +11,6 @@ class AddDrink(forms.ModelForm):
         label='Krótki opis',
         widget=forms.TextInput(attrs={'class': 'form-control'}),
     )
-    ingredients_query = Ingredient.objects.all()
-    INGREDIENT_CHOICES = [(ingredient.name, ingredient.name) for ingredient in ingredients_query]
-
-    ingredients = forms.MultipleChoiceField(
-        label='Wybierz składniki',
-        choices=INGREDIENT_CHOICES,
-        widget=forms.CheckboxSelectMultiple(attrs={'class': 'custom-checkbox-class'}),
-    )
-
 
     image=forms.ImageField(
         label='Dodaj zdjęcie',
@@ -29,7 +20,7 @@ class AddDrink(forms.ModelForm):
 
     drink_publish = forms.BooleanField(
         label='Drink publiczny',
-        required=False,  # Jeśli pole ma być opcjonalne
+        required=False,
         widget=forms.CheckboxInput(attrs={'class': 'custom-checkbox-class'}),
     )
     class Meta:
