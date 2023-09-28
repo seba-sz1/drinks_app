@@ -18,7 +18,7 @@ class TestRegister(TestCase):
             'username': self.new_username,
             'email': self.new_email,
             'password1': self.new_password,
-            'password2': self.new_password
+            'password2': self.new_password,
         }
         self.existing_user = User.objects.create_user(self.existing_username, self.existing_email, self.password)
 

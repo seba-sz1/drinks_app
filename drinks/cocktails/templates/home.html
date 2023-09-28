@@ -5,6 +5,16 @@
 Home
 {% endblock title %}
 
+{% block search %}
+       <p class="mt-2">Skorzystaj z naszej wyszukiwarki! Wpisz swój ulubiony alkohol.</p>
+       <form class="pb-4 pt-4" action="{% url 'search' %}" method="GET">
+            <div class="input-group rounded m-auto" style="width: 75%;">
+                <input type="search" class="form-control rounded" name="q" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                <button class="btn btn-primary" type="submit">Search </button>
+            </div>
+       </form>
+{% endblock search %}
+
 {% block contenthome %}
 <h3>Ostatnio dodane koktajle</h3>
 {% if last_cocktails1 %}
@@ -13,18 +23,16 @@ Home
         {% for cocktail in last_cocktails1 %}
             <div class="col">
                 <div class="card-testimonial" >
-                    <a href="{% url 'detail_cocktail' cocktail.id %}">
-                        <article>
+                    <article>
+                        <a href="{% url 'detail_cocktail' cocktail.id %}">
                             <picture>
                                 <source media="(min-width: 768px)" srcset="{{ cocktail.image.url }}">
                                 <img src="{{ cocktail.image.url }}" alt="Drink Image">
                             </picture>
                             <h4>{{ cocktail.name }}</h4>
-                            <article class="short-description">
-                                <p>{{ cocktail.description }}</p>
-                            </article>
-                        </article>
-                    </a>
+                        </a>
+                        <p style="font-size: small">Dodano: {{ cocktail.creation_date }}</p>
+                    </article>
                 </div>
             </div>
         {% endfor %}
@@ -37,18 +45,16 @@ Home
         {% for cocktail in last_cocktails2 %}
         <div class="col">
             <div class="card-testimonial">
-                <a href="{% url 'detail_cocktail' cocktail.id %}">
-                    <article>
+                <article>
+                    <a href="{% url 'detail_cocktail' cocktail.id %}">
                         <picture>
                             <source media="(min-width: 768px)" srcset="{{ cocktail.image.url }}">
                             <img src="{{ cocktail.image.url }}" alt="Drink Image">
                         </picture>
                         <h4>{{ cocktail.name }}</h4>
-                        <article class="short-description">
-                            <p>{{ cocktail.description }}</p>
-                        </article>
-                    </article>
-                </a>
+                    </a>
+                    <p style="font-size: small">Dodano: {{ cocktail.creation_date }}</p>
+                </article>
             </div>
         </div>
         {% endfor %}
@@ -57,3 +63,7 @@ Home
 {% endif %}
 
 {% endblock contenthome %}
+
+{% block top_button %}
+{{ block.super }}
+{% endblock %}
