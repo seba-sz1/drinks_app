@@ -29,7 +29,7 @@ class AddDrink(forms.ModelForm):
 
     drink_publish = forms.BooleanField(
         label='Drink publiczny',
-        required=True,  # Jeśli pole ma być opcjonalne
+        required=False,  # Jeśli pole ma być opcjonalne
         widget=forms.CheckboxInput(attrs={'class': 'custom-checkbox-class'}),
     )
     class Meta:
