@@ -42,10 +42,29 @@ def create(request):
             for key, value in request.POST.items():
                 if key.startswith('ingredient_'):
                     ingredient_id = int(key.split('_')[1])
-                    # ingredient = Ingredient.objects.get(pk=ingredient_id)
-                    # selected_ingredient_id = form.cleaned_data['ingredient']
-                    # selected_ingredient_id = request.POST.get('ingredient')
+
                     selected_ingredients.append(ingredient_id)
+
+                    post_data_list = list(request.POST.items())
+                    for key, value in post_data_list:
+                        print(f'Klucz: {key}, Wartość: {value}')
+
+                    # Sprawdź, czy użytkownik wprowadził nowy składnik
+                    if key.startswith('new_ingredient'):
+                        new_ingredient_name = request.POST.get('new_ingredient')
+                        new_ingredient_amount = request.POST.get('new_ingredient_amount')
+                        new_ingredient_unit = request.POST.get('new_ingredient_unit')
+
+
+                        if new_ingredient_name:
+                            # Utwórz nowy składnik
+                            new_ingredient = Ingredient(
+                                name=new_ingredient_name,
+                                amount=new_ingredient_amount,
+                                unit=new_ingredient_unit,
+                            )
+                            new_ingredient.save()
+                            selected_ingredients.append(new_ingredient.id)
 
             # Przypisz składniki do drinka
             drink.ingredients.set(selected_ingredients)

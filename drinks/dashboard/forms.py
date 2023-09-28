@@ -40,3 +40,5 @@ class AddDrink(forms.ModelForm):
         fields = ['name', 'description', 'image', 'drink_publish']
 
 
+
+
